@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="frontend/frontend.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="order-system-modular-monolith.AppHost/order-system-modular-monolith.AppHost.csproj" />
+  <Project Path="order-system-modular-monolith.BuildingBlocks/order-system-modular-monolith.BuildingBlocks.csproj" />
+  <Project Path="order-system-modular-monolith.Server/order-system-modular-monolith.Server.csproj" />
+</Solution>
