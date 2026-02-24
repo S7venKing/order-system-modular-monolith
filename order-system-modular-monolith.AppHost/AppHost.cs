@@ -14,4 +14,6 @@ var webfrontend = builder.AddViteApp("webfrontend", "../frontend")
 
 server.PublishWithContainerFiles(webfrontend, "wwwroot");
 
+builder.AddProject<Projects.order_system_modular_monolith_Api>("order-system-modular-monolith-api");
+
 builder.Build().Run();

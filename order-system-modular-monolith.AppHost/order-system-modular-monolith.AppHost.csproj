@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\order-system-modular-monolith.Api\order-system-modular-monolith.Api.csproj" />
     <ProjectReference Include="..\order-system-modular-monolith.Server\order-system-modular-monolith.Server.csproj" />
   </ItemGroup>
 
