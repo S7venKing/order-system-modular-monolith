@@ -7,7 +7,6 @@ namespace order_system_modular_monolith.Api.Extension
         public static WebApplicationBuilder AddSharedInfrastructure(this WebApplicationBuilder builder)
         {
             builder.AddServiceDefaults();
-
             return builder;
         }
     }

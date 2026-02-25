@@ -16,6 +16,10 @@ namespace order_system_modular_monolith.BuildingBlocks.Infrastructure
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(DomainEventDispatcher).Assembly);
+            });
 
             return services;
         }
