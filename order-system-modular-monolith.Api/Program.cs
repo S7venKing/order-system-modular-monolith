@@ -12,11 +12,14 @@ builder.AddSharedInfrastructure();
 
 var app = builder.Build();
 
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseHttpsRedirection();
+
+app.MapDefaultEndpoints();
 
 app.Run();
