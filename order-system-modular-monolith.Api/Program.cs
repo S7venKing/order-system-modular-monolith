@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddBuildingBlocksInfrastructure();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.AddSharedInfrastructure();
 
 var app = builder.Build();
@@ -21,5 +24,11 @@ app.MapControllers();
 app.UseHttpsRedirection();
 
 app.MapDefaultEndpoints();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.Run();

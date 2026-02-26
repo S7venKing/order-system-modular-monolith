@@ -2,21 +2,24 @@ using Aspire.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var cache = builder.AddRedis("cache");
-var redis = builder.AddRedis("redis");
+var redis = builder.AddRedis("redis")
+                   .WithDataVolume()
+                   .WithLifetime(ContainerLifetime.Persistent);
+
 
 var postgres = builder.AddPostgres("postgres")
-    .WithPgAdmin(); // optional UI
+    .WithPgAdmin().WithDataVolume().WithLifetime(ContainerLifetime.Persistent); ;
 
-var postgresDb = postgres.AddDatabase("ordersdb");
+var postgresDb = postgres.AddDatabase("ordersdb")
+    ;
 
-var mongo = builder.AddMongoDB("mongo");
+var mongo = builder.AddMongoDB("mongo")
+                   .WithDataVolume()
+                   .WithLifetime(ContainerLifetime.Persistent); ;
 
 var mongoDb = mongo.AddDatabase("orders-mongo");
 
 var server = builder.AddProject<Projects.order_system_modular_monolith_Server>("server")
-    .WithReference(cache)
-    .WaitFor(cache)
     .WithHttpHealthCheck("/health")
     .WithExternalHttpEndpoints();
 
@@ -35,7 +38,5 @@ var api = builder.AddProject<Projects.order_system_modular_monolith_Api>("api")
     .WaitFor(mongo)
     .WithHttpHealthCheck("/health")
     .WithExternalHttpEndpoints();
-
-builder.AddProject<Projects.order_system_modular_monolith_Api>("order-system-modular-monolith-api");
 
 builder.Build().Run();
