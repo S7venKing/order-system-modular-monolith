@@ -14,3 +14,5 @@ A practical Modular Monolith architecture with the technologies and architecture
 - ✔️ **[`EventStore`](https://github.com/EventStore/EventStore)** - The open-source, functional database with Complex Event Processing.
 - ✔️ **[`MongoDB.Driver`](https://github.com/mongodb/mongo-csharp-driver)** - .NET Driver for MongoDB.
 - ✔️ **[`Aspire`](https://github.com/dotnet/aspire)** - .NET stack for building and orchestrating observable, distributed cloud-native applications.
+## Project References & Credits
+ **(https://github.com/meysamhadeli/booking-modular-monolith)**
