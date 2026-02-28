@@ -6,7 +6,7 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
 {
     public abstract class AggregateRoot<TId>
         : Entity<TId>, IHasDomainEvents
-        where TId : StronglyTypedId
+
     {
         private readonly List<IDomainEvent> _domainEvents = new();
 

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>order_system_modular_monolith.Module</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\order-system-modular-monolith.BuildingBlocks\order-system-modular-monolith.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\order-system-modular-monolith.ServiceDefaults\order-system-modular-monolith.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Product\Exceptions\" />
+    <Folder Include="Product\Dtos\" />
+    <Folder Include="Product\Controllers\" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+	</ItemGroup>
+</Project>

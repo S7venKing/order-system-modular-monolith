@@ -19,16 +19,6 @@ var mongo = builder.AddMongoDB("mongo")
 
 var mongoDb = mongo.AddDatabase("orders-mongo");
 
-var server = builder.AddProject<Projects.order_system_modular_monolith_Server>("server")
-    .WithHttpHealthCheck("/health")
-    .WithExternalHttpEndpoints();
-
-var webfrontend = builder.AddViteApp("webfrontend", "../frontend")
-    .WithReference(server)
-    .WaitFor(server);
-
-server.PublishWithContainerFiles(webfrontend, "wwwroot");
-
 var api = builder.AddProject<Projects.order_system_modular_monolith_Api>("api")
     .WithReference(redis)
     .WithReference(postgresDb)
@@ -38,5 +28,11 @@ var api = builder.AddProject<Projects.order_system_modular_monolith_Api>("api")
     .WaitFor(mongo)
     .WithHttpHealthCheck("/health")
     .WithExternalHttpEndpoints();
+
+var webfrontend = builder.AddViteApp("webfrontend", "../frontend")
+    .WithReference(api)
+    .WaitFor(api);
+
+api.PublishWithContainerFiles(webfrontend, "wwwroot");
 
 builder.Build().Run();

@@ -5,9 +5,8 @@ using System.Text;
 namespace order_system_modular_monolith.BuildingBlocks.Domain
 {
     public abstract class Entity<TId>
-        where TId : StronglyTypedId
     {
-        public TId Id { get; protected set; }
+        public abstract TId Id { get; set; }
 
         protected Entity(TId id)
         {

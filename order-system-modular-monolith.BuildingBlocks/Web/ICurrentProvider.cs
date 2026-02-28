@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace order_system_modular_monolith.BuildingBlocks.Web
 {
-    using System.Security.Claims;
-
 
     public interface ICurrentUserProvider
     {

@@ -1,4 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\order-system-modular-monolith.Api\order-system-modular-monolith.Api.csproj" />
-    <ProjectReference Include="..\order-system-modular-monolith.Server\order-system-modular-monolith.Server.csproj" />
+    <ProjectReference Include="..\order-system-modular-monolith.Module\order-system-modular-monolith.Product.csproj" />
   </ItemGroup>
 
   <ItemGroup>

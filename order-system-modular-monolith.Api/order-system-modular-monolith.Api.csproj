@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\order-system-modular-monolith.BuildingBlocks\order-system-modular-monolith.BuildingBlocks.csproj" />
+    <ProjectReference Include="..\order-system-modular-monolith.Module\order-system-modular-monolith.Product.csproj" />
     <ProjectReference Include="..\order-system-modular-monolith.ServiceDefaults\order-system-modular-monolith.ServiceDefaults.csproj" />
   </ItemGroup>
 

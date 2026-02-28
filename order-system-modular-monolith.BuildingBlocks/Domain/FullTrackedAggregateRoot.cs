@@ -7,11 +7,11 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
 {
     public abstract class FullTrackedAggregateRoot<TId>
         : AuditableAggregateRoot<TId>, ISoftDelete, IVersioned
-        where TId : StronglyTypedId
     {
         public bool IsDeleted { get; set; }
         public long Version { get; set; }
 
-        protected FullTrackedAggregateRoot(TId id) : base(id) { }
+        public FullTrackedAggregateRoot(TId id) : base(id) { }
+
     }
 }
