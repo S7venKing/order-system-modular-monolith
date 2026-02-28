@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 
-namespace order_system_modular_monolith.Module.Data
+namespace order_system_modular_monolith.Module.Product.Data
 {
     public class ProductDbContext : DbContext
     {
