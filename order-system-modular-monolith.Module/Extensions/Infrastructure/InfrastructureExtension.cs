@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using order_system_modular_monolith.BuildingBlocks.EFCore;
-using order_system_modular_monolith.Module.Product.Data;
-using order_system_modular_monolith.Module.Product.Infrastructure;
+using order_system_modular_monolith.Product.Data;
 
-namespace order_system_modular_monolith.Product.Infrastructure
+namespace order_system_modular_monolith.Product.Extensions.Infrastructure
 {
     public static class InfrastructureExtension
     {

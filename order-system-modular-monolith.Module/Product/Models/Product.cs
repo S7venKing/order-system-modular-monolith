@@ -3,7 +3,7 @@ using order_system_modular_monolith.Module.Product.ValueObjects;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace order_system_modular_monolith.Module.Product.Models
+namespace order_system_modular_monolith.Product.Models
 {
     [Table("products", Schema = "products")]
     public class Product : FullTrackedAggregateRoot<Guid>

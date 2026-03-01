@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>order_system_modular_monolith.Module</RootNamespace>
+    <RootNamespace>order_system_modular_monolith.Product</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,13 @@
     <ProjectReference Include="..\order-system-modular-monolith.ServiceDefaults\order-system-modular-monolith.ServiceDefaults.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Seed\" />
     <Folder Include="Product\Exceptions\" />
     <Folder Include="Product\Dtos\" />
     <Folder Include="Product\Controllers\" />

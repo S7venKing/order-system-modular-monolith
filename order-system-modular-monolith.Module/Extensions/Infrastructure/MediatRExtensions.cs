@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using order_system_modular_monolith.Module.Product;
 
-namespace order_system_modular_monolith.Module.Product.Infrastructure
+namespace order_system_modular_monolith.Product.Extensions.Infrastructure
 {
     public static class MediatRExtensions
     {

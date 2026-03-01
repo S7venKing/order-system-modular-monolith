@@ -8,8 +8,7 @@ var redis = builder.AddRedis("redis")
 
 
 var postgres = builder.AddPostgres("postgres")
-    .WithPgAdmin().WithDataVolume().WithLifetime(ContainerLifetime.Persistent); ;
-
+    .WithPgAdmin().WithDataVolume().WithLifetime(ContainerLifetime.Persistent);
 var postgresDb = postgres.AddDatabase("ordersdb")
     ;
 

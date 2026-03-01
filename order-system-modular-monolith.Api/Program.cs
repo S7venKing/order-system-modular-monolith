@@ -1,6 +1,7 @@
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.Api.Extension;
-using order_system_modular_monolith.Module.Infrastructure;
+using order_system_modular_monolith.Identity.Extensions.Infrastructure;
+using order_system_modular_monolith.Product.Extensions.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +13,13 @@ builder.Services.AddBuildingBlocksInfrastructure();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.AddProductModules(builder.Configuration);
+builder.AddIdentityModules(builder.Configuration);
 builder.AddSharedInfrastructure();
 
 var app = builder.Build();
 
 app.UseProductModules();
+app.UseIdentityModules();
 
 app.UseHttpsRedirection();
 

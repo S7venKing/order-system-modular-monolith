@@ -8,16 +8,6 @@ namespace order_system_modular_monolith.BuildingBlocks.EFCore
     public static class MigrationExtensions
     {
 
-
-        public static IApplicationBuilder UseMigration<TContext>(this IApplicationBuilder app)
-    where TContext : DbContext
-        {
-            MigrateDbContext<TContext>(app.ApplicationServices);
-
-            return app;
-        }
-
-
         public static void MigrateDbContext<TContext>(this IServiceProvider serviceProvider)
            where TContext : DbContext
         {

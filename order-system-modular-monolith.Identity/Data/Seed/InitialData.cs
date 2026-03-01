@@ -1,0 +1,38 @@
+namespace order_system_modular_monolith.Identity.Data.Seed;
+
+using System;
+using System.Collections.Generic;
+using Identity.Models;
+
+public static class InitialData
+{
+    public static List<User> Users { get; }
+
+    static InitialData()
+    {
+        Users = new List<User>
+        {
+            new User
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Sam",
+                LastName = "H",
+                UserName = "samh",
+                PassPortNumber = "12345678",
+                Email = "sam@test.com",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                
+            },
+            new User
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Sam2",
+                LastName = "H2",
+                UserName = "samh2",
+                PassPortNumber = "87654321",
+                Email = "sam2@test.com",
+                SecurityStamp = Guid.NewGuid().ToString(),
+            }
+        };
+    }
+}
