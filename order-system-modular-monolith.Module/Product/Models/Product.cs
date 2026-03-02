@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace order_system_modular_monolith.Product.Models
 {
     [Table("products", Schema = "products")]
-    public class Product : FullTrackedAggregateRoot<Guid>
+    public class Products : FullTrackedAggregateRoot<Guid>
     {
         [Key]
         [Column("id")]
@@ -15,9 +15,15 @@ namespace order_system_modular_monolith.Product.Models
         [Required]
         [MaxLength(200)]
         [Column("name")]
-        public string Name { get; private set; } = default!;
+        public string Name { get; set; } = default!;
 
-        public Product(Guid id) : base(id)
+        [Column("price")]
+        public decimal Price { get; set; }
+
+        [Column("category")]
+        public string Category { get; set; }
+
+        public Products(Guid id) : base(id)
         {
         }
 

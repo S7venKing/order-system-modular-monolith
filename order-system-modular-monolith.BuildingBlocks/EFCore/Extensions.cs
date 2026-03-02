@@ -71,7 +71,7 @@ public static class Extensions
 
     private static async Task MigrateAsync<TContext>(IServiceProvider serviceProvider)
         where TContext : DbContext, IDbContext
-    {
+        {
         await using var scope = serviceProvider.CreateAsyncScope();
         var context = scope.ServiceProvider.GetRequiredService<TContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<TContext>>();

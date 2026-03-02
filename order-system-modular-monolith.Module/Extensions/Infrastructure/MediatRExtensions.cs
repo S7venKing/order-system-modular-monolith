@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using order_system_modular_monolith.Module.Product;
+using order_system_modular_monolith.Product.Root;
 
 namespace order_system_modular_monolith.Product.Extensions.Infrastructure
 {
