@@ -20,8 +20,6 @@
     <Folder Include="Data\Migrations\" />
     <Folder Include="Data\Seed\" />
     <Folder Include="Product\Exceptions\" />
-    <Folder Include="Product\Dtos\" />
-    <Folder Include="Product\Controllers\" />
   </ItemGroup>
 	
 	<ItemGroup>
