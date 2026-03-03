@@ -9,7 +9,7 @@ namespace order_system_modular_monolith.BuildingBlocks.Application.Abstractions
         where T : AggregateRoot<TId>
     {
         Task AddAsync(T entity);
-        void Update(T entity);
-        void Remove(T entity);
+        Task Update(T entity);
+        Task Remove(T entity);
     }
 }

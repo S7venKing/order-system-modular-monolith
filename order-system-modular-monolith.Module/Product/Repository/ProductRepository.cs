@@ -19,16 +19,19 @@ namespace order_system_modular_monolith.Product.Product.Repository
         public async Task AddAsync(Products entity)
         {
             await _dbContext.Products.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Remove(Products entity)
+        public async Task Remove(Products entity)
         {
             _dbContext.Products.Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Update(Products entity)
+        public async Task Update(Products entity)
         {
             _dbContext.Products.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

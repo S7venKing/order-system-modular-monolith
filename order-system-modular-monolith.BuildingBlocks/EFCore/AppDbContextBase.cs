@@ -18,14 +18,21 @@ public abstract class AppDbContextBase : DbContext, IDbContext
     private IDbContextTransaction _currentTransaction;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    protected AppDbContextBase(DbContextOptions options, ICurrentUserProvider? currentUserProvider = null, ILogger<AppDbContextBase>? logger = null, IDateTimeProvider dateTimeProvider = null) :
-        base(options)
+    protected AppDbContextBase(
+        DbContextOptions options,
+        ICurrentUserProvider currentUserProvider,
+        ILogger<AppDbContextBase> logger,
+        IDateTimeProvider dateTimeProvider)
+        : base(options)
     {
         _currentUserProvider = currentUserProvider;
         _logger = logger;
         _dateTimeProvider = dateTimeProvider;
     }
 
+    public AppDbContextBase(DbContextOptions options) : base(options)
+    {
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

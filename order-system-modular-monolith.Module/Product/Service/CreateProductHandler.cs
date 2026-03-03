@@ -22,7 +22,9 @@ namespace order_system_modular_monolith.Product.Product.Service
             CancellationToken cancellationToken)
         {
             var product = new Products(Guid.NewGuid());
-
+            product.Name = request.Name;
+            product.Price = request.Price;
+            product.Category = request.Category;
             await _productRepository.AddAsync(product);
 
             return new CreateProductResponseDto
