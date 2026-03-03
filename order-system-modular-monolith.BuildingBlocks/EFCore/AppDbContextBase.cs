@@ -11,27 +11,25 @@ using IsolationLevel = System.Data.IsolationLevel;
 
 namespace order_system_modular_monolith.BuildingBlocks.EFCore;
 
-public abstract class AppDbContextBase : DbContext, IDbContext
+public abstract class AppDbContextBase<TContext>
+    : DbContext, IDbContext
+    where TContext : DbContext 
 {
     private readonly ICurrentUserProvider? _currentUserProvider;
-    private readonly ILogger<AppDbContextBase>? _logger;
+    private readonly ILogger<AppDbContextBase<TContext>>? _logger;
     private IDbContextTransaction _currentTransaction;
     private readonly IDateTimeProvider _dateTimeProvider;
 
     protected AppDbContextBase(
-        DbContextOptions options,
-        ICurrentUserProvider currentUserProvider,
-        ILogger<AppDbContextBase> logger,
-        IDateTimeProvider dateTimeProvider)
+        DbContextOptions<TContext> options,
+        ICurrentUserProvider? currentUserProvider = null,
+        ILogger<AppDbContextBase<TContext>>? logger = null,
+        IDateTimeProvider? dateTimeProvider = null)
         : base(options)
     {
         _currentUserProvider = currentUserProvider;
         _logger = logger;
         _dateTimeProvider = dateTimeProvider;
-    }
-
-    public AppDbContextBase(DbContextOptions options) : base(options)
-    {
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
