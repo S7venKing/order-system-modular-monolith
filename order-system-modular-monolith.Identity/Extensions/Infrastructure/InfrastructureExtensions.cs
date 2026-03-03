@@ -13,7 +13,7 @@ public static class InfrastructureExtensions
 {
     public static WebApplicationBuilder AddIdentityModules(this WebApplicationBuilder builder, IConfiguration configuration)
     {
-        builder.AddCustomDbContext<IdentityContext>("ordersdb");
+        builder.AddCustomDbContext<IdentityContext>("Postgres");
         builder.Services.AddScoped<IDataSeeder, IdentityDataSeeder>();
         builder.AddCustomIdentityServer();
 

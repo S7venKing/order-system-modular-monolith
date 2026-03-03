@@ -76,17 +76,17 @@ public static class Extensions
         var context = scope.ServiceProvider.GetRequiredService<TContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
 
-        await context.Database.MigrateAsync();
+        //await context.Database.MigrateAsync();
 
-        //var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+        var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
 
-        //if (pendingMigrations.Any())
-        //{
-        //    logger.LogInformation("Applying {Count} pending migrations...", pendingMigrations.Count());
+        if (pendingMigrations.Any())
+        {
+            logger.LogInformation("Applying {Count} pending migrations...", pendingMigrations.Count());
 
-        //    await context.Database.MigrateAsync();
-        //    logger.LogInformation("Migrations applied successfully.");
-        //}
+            await context.Database.MigrateAsync();
+            logger.LogInformation("Migrations applied successfully.");
+        }
     }
 
     private static async Task SeedAsync(IServiceProvider serviceProvider)

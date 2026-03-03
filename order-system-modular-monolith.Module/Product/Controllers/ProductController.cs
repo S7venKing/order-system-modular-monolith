@@ -17,11 +17,15 @@ namespace order_system_modular_monolith.Product.Product.Controllers
             _createProductHandler = createProductHandler;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestDto input)
         {
-            await _createProductHandler.Handle(input, input.cancellationToken);
-            return Ok();
+            var response = await _createProductHandler.Handle(input, input.cancellationToken);
+            if (response == null || response.Id == null)
+            {
+                return BadRequest("Create Product failed!");
+            }
+            return Ok("Create Product successfully");
         }
     }
 }

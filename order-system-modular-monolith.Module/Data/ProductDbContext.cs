@@ -21,6 +21,7 @@ namespace order_system_modular_monolith.Product.Data
             modelBuilder.HasDefaultSchema(Schema);
             modelBuilder.ApplyConfigurationsFromAssembly(
                 typeof(ProductDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
