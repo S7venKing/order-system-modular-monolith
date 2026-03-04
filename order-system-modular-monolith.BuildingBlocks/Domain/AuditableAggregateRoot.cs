@@ -14,5 +14,8 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
         public long? LastModifiedBy { get; set; }
 
         protected AuditableAggregateRoot(TId id) : base(id) { }
+
+        protected AuditableAggregateRoot(){ }
+
     }
 }

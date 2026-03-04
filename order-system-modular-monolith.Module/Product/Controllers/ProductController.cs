@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using order_system_modular_monolith.Product.Product.Dtos;
+using order_system_modular_monolith.Product.Dtos.UpdateProductDto;
+using order_system_modular_monolith.Product.Product.Dtos.CreateProductDto;
 using order_system_modular_monolith.Product.Product.Service;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace order_system_modular_monolith.Product.Product.Controllers
     public class ProductController : ControllerBase
     {
         private readonly CreateProductHandler _createProductHandler;
+        private readonly UpdateProductHandler _updateProductHandler;
 
-        public ProductController(CreateProductHandler createProductHandler)
+
+        public ProductController(CreateProductHandler createProductHandler, UpdateProductHandler updateProductHandler)
         {
             _createProductHandler = createProductHandler;
+            _updateProductHandler = updateProductHandler;
         }
 
         [HttpPost("create")]
@@ -27,6 +31,25 @@ namespace order_system_modular_monolith.Product.Product.Controllers
                 return BadRequest("Create Product failed!");
             }
             return Ok("Create Product successfully");
+        }
+
+        [HttpPatch("update")]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequestDto input, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var response = await _updateProductHandler.Handle(input, cancellationToken);
+                if (response == null || !response.IsSuccess)
+                {
+                    return BadRequest("Create Product failed! " + response?.Error?.Message);
+                }
+                return Ok("Create Product successfully");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Error");
+            }
+
         }
     }
 }

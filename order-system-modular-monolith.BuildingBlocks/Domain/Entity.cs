@@ -12,5 +12,10 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
         {
             Id = id;
         }
+
+        protected Entity()
+        {
+
+        }
     }
 }

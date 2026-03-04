@@ -23,6 +23,7 @@ namespace order_system_modular_monolith.Product.Extensions.Infrastructure
                             configuration.GetConnectionString("Postgres")));
             builder.Services.AddTransient<IProductRepository, ProductRepository>();
             builder.Services.AddTransient<CreateProductHandler>();
+            builder.Services.AddTransient<UpdateProductHandler>();
             return builder;
         }
 

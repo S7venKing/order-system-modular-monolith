@@ -13,5 +13,7 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
 
         public FullTrackedAggregateRoot(TId id) : base(id) { }
 
+        public FullTrackedAggregateRoot() { }
+
     }
 }

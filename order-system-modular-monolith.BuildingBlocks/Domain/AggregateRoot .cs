@@ -12,6 +12,9 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
 
         protected AggregateRoot(TId id) : base(id) { }
 
+        protected AggregateRoot() { }
+
+
         public IReadOnlyCollection<IDomainEvent> DomainEvents
             => _domainEvents.AsReadOnly();
 

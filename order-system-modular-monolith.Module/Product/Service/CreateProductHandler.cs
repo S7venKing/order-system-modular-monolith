@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using order_system_modular_monolith.Product.Models;
-using order_system_modular_monolith.Product.Product.Dtos;
+using order_system_modular_monolith.Product.Product.Dtos.CreateProductDto;
 using order_system_modular_monolith.Product.Repository;
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,7 @@ namespace order_system_modular_monolith.Product.Product.Service
             product.Name = request.Name;
             product.Price = request.Price;
             product.Category = request.Category;
+            product.Code = request.Code;
             await _productRepository.AddAsync(product);
 
             return new CreateProductResponseDto

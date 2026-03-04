@@ -4,7 +4,7 @@ using System.Text;
 
 namespace order_system_modular_monolith.BuildingBlocks.Exceptions
 {
-    public sealed class NotFoundException : AppException
+    public class NotFoundException : AppException
     {
         public NotFoundException(string entity)
             : base("not_found",

@@ -14,6 +14,11 @@ namespace order_system_modular_monolith.Product.Models
 
         [Required]
         [MaxLength(200)]
+        [Column("code")]
+        public string Code { get; set; } = default!;
+
+        [Required]
+        [MaxLength(200)]
         [Column("name")]
         public string Name { get; set; } = default!;
 
@@ -25,6 +30,11 @@ namespace order_system_modular_monolith.Product.Models
 
         public Products(Guid id) : base(id)
         {
+        }
+
+        public Products()
+        {
+
         }
 
     }
