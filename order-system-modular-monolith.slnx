@@ -12,4 +12,5 @@
   <Project Path="order-system-modular-monolith.Identity/order-system-modular-monolith.Identity.csproj" Id="4aaa2e13-6099-4b20-a3d3-7f70b793af8c" />
   <Project Path="order-system-modular-monolith.Module/order-system-modular-monolith.Product.csproj" />
   <Project Path="order-system-modular-monolith.ServiceDefaults/order-system-modular-monolith.ServiceDefaults.csproj" Id="1c8df278-b3c0-42db-a885-ee065ea7df26" />
+  <Project Path="order-system-modular-monolith.Stock/order-system-modular-monolith.Stock.csproj" />
 </Solution>
