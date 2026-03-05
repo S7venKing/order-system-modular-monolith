@@ -15,7 +15,6 @@ namespace order_system_modular_monolith.Stock.Models
         [Required]
         [MaxLength(200)]
         [Column("productCode")]
-        [ForeignKey()]
         public string ProductCode { get; set; } = default!;
 
         [Required]

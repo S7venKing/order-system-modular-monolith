@@ -16,7 +16,7 @@ namespace order_system_modular_monolith.BuildingBlocks.Infrastructure
             _publisher = publisher;
         }
 
-        public async Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents)
+        public async Task DispatchAsync(IReadOnlyList<IDomainEvent> domainEvents)
         {
             foreach (var domainEvent in domainEvents)
             {

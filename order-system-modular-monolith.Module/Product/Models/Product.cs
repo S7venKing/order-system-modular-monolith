@@ -1,5 +1,6 @@
 ﻿using order_system_modular_monolith.BuildingBlocks.Domain;
 using order_system_modular_monolith.Module.Product.ValueObjects;
+using order_system_modular_monolith.Product.Product.Domain;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,6 +31,13 @@ namespace order_system_modular_monolith.Product.Models
 
         public Products(Guid id) : base(id)
         {
+        }
+
+        public Products(Guid id, string productCode, long quantity) : base(id)
+        {
+            Code = productCode;
+
+            Raise(new ProductCreatedDomainEvent(id, productCode, quantity));
         }
 
         public Products()

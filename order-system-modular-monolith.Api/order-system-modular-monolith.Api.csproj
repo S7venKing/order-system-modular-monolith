@@ -32,6 +32,7 @@
     <ProjectReference Include="..\order-system-modular-monolith.Identity\order-system-modular-monolith.Identity.csproj" />
     <ProjectReference Include="..\order-system-modular-monolith.Module\order-system-modular-monolith.Product.csproj" />
     <ProjectReference Include="..\order-system-modular-monolith.ServiceDefaults\order-system-modular-monolith.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\order-system-modular-monolith.Stock\order-system-modular-monolith.Stock.csproj" />
   </ItemGroup>
 
 </Project>

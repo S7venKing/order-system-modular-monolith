@@ -16,11 +16,16 @@ namespace order_system_modular_monolith.Product.Data
         private readonly ILogger<AppDbContextBase<ProductDbContext>>? _logger;
         private IDbContextTransaction _currentTransaction;
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
 
         public const string Schema = "products";
 
-        public ProductDbContext(DbContextOptions<ProductDbContext> options, ICurrentUserProvider? currentUserProvider = null, ILogger<AppDbContextBase<ProductDbContext>>? logger = null, IDateTimeProvider? dateTimeProvider=null) : base(options, currentUserProvider, logger, dateTimeProvider)
+        public ProductDbContext(DbContextOptions<ProductDbContext> options, ICurrentUserProvider? currentUserProvider = null, ILogger<AppDbContextBase<ProductDbContext>>? logger = null, IDateTimeProvider? dateTimeProvider = null, IDomainEventDispatcher? domainEvent = null) : base(options, currentUserProvider, logger, dateTimeProvider, domainEvent)
         {
+             _currentUserProvider = currentUserProvider;
+             _logger = logger;
+             _dateTimeProvider = dateTimeProvider;
+             _domainEventDispatcher = domainEvent!;
         }
 
 

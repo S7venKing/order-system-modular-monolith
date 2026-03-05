@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using order_system_modular_monolith.BuildingBlocks.Application.Abstractions;
+using order_system_modular_monolith.BuildingBlocks.Domain;
 using order_system_modular_monolith.BuildingBlocks.Web;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,9 @@ namespace order_system_modular_monolith.BuildingBlocks.Infrastructure
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(DomainEventDispatcher).Assembly);
+                cfg.RegisterServicesFromAssemblies(typeof(DomainEvent).Assembly
+);
+
             });
 
             return services;

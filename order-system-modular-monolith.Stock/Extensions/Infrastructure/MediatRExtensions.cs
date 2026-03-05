@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using order_system_modular_monolith.Module.Stock;
 using order_system_modular_monolith.Stock.Root;
+using order_system_modular_monolith.Stock.Stock.Service;
 
 namespace order_system_modular_monolith.Stock.Extensions.Infrastructure
 {

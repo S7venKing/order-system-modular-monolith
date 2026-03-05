@@ -7,9 +7,9 @@ using order_system_modular_monolith.BuildingBlocks.Application.Abstractions;
 using order_system_modular_monolith.BuildingBlocks.EFCore;
 using order_system_modular_monolith.BuildingBlocks.Web;
 using order_system_modular_monolith.Stock.Data;
-using order_system_modular_monolith.Stock.Stock.Repository;
-using order_system_modular_monolith.Stock.Stock.Service;
 using order_system_modular_monolith.Stock.Repository;
+using order_system_modular_monolith.Stock.Stock.Service;
+using order_system_modular_monolith.Stock.Service;
 
 namespace order_system_modular_monolith.Stock.Extensions.Infrastructure
 {
@@ -22,8 +22,9 @@ namespace order_system_modular_monolith.Stock.Extensions.Infrastructure
                      options.UseNpgsql(
                             configuration.GetConnectionString("Postgres")));
             builder.Services.AddTransient<IStockRepository, StockRepository>();
-            builder.Services.AddTransient<CreateStockHandler>();
             builder.Services.AddTransient<UpdateStockHandler>();
+            builder.Services.AddTransient<ProductCreatedHandler>();
+
             return builder;
         }
 

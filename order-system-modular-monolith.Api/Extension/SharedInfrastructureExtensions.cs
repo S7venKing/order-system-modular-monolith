@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.EntityFrameworkCore;
 using order_system_modular_monolith.BuildingBlocks.Application.Abstractions;
+using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.BuildingBlocks.Jwt;
 using order_system_modular_monolith.BuildingBlocks.Web;
 

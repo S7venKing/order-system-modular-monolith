@@ -13,6 +13,10 @@ namespace order_system_modular_monolith.Product.Product.Dtos.CreateProductDto
 
         [Required(ErrorMessage = "Price is required")]
         public long Price { get; set; } = 50;
+
+        [Range(0,999999, ErrorMessage = "Quantity must be less than 1 mil")]
+        public long Quantity { get; set; } = 0;
+
         public string Category { get; set; } = "normal";
     }
 }

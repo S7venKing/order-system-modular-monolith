@@ -2,6 +2,7 @@ using order_system_modular_monolith.Api.Extension;
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.Identity.Extensions.Infrastructure;
 using order_system_modular_monolith.Product.Extensions.Infrastructure;
+using order_system_modular_monolith.Stock.Extensions.Infrastructure;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.AddProductModules(builder.Configuration);
 builder.AddIdentityModules(builder.Configuration);
+builder.AddStockModules(builder.Configuration);
 builder.AddSharedInfrastructure();
 
 var app = builder.Build();

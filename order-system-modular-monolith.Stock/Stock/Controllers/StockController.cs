@@ -19,7 +19,7 @@ namespace order_system_modular_monolith.Stock.Stock.Controllers
             _updateStockHandler = updateStockHandler;
         }
 
-        [HttpPatch("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateStock([FromBody] UpdateStockRequestDto input, CancellationToken cancellationToken)
         {
             try
@@ -35,7 +35,6 @@ namespace order_system_modular_monolith.Stock.Stock.Controllers
             {
                 return BadRequest("Error");
             }
-
         }
     }
 }

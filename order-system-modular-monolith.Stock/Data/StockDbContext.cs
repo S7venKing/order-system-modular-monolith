@@ -19,7 +19,7 @@ namespace order_system_modular_monolith.Stock.Data
 
         public const string Schema = "stocks";
 
-        public StockDbContext(DbContextOptions<StockDbContext> options, ICurrentUserProvider? currentUserProvider = null, ILogger<AppDbContextBase<StockDbContext>>? logger = null, IDateTimeProvider? dateTimeProvider = null) : base(options, currentUserProvider, logger, dateTimeProvider)
+        public StockDbContext(DbContextOptions<StockDbContext> options, ICurrentUserProvider? currentUserProvider = null, ILogger<AppDbContextBase<StockDbContext>>? logger = null, IDateTimeProvider? dateTimeProvider = null, DomainEventDispatcher? domainEventDispatcher = null) : base(options, currentUserProvider, logger, dateTimeProvider, domainEventDispatcher)
         {
         }
 

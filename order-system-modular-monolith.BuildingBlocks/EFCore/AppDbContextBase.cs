@@ -1,9 +1,12 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
+using order_system_modular_monolith.BuildingBlocks.Application;
 using order_system_modular_monolith.BuildingBlocks.Application.Abstractions;
 using order_system_modular_monolith.BuildingBlocks.Domain;
 using order_system_modular_monolith.BuildingBlocks.EFCore;
+using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.BuildingBlocks.Web;
 using System.Collections.Immutable;
 using static order_system_modular_monolith.BuildingBlocks.Domain.Behaviors;
@@ -13,23 +16,27 @@ namespace order_system_modular_monolith.BuildingBlocks.EFCore;
 
 public abstract class AppDbContextBase<TContext>
     : DbContext, IDbContext
-    where TContext : DbContext 
+    where TContext : DbContext
 {
     private readonly ICurrentUserProvider? _currentUserProvider;
     private readonly ILogger<AppDbContextBase<TContext>>? _logger;
     private IDbContextTransaction _currentTransaction;
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDomainEventDispatcher _domainEventDispatcher;
 
     protected AppDbContextBase(
         DbContextOptions<TContext> options,
-        ICurrentUserProvider? currentUserProvider = null,
-        ILogger<AppDbContextBase<TContext>>? logger = null,
-        IDateTimeProvider? dateTimeProvider = null)
+        ICurrentUserProvider? currentUserProvider,
+        ILogger<AppDbContextBase<TContext>>? logger,
+        IDateTimeProvider? dateTimeProvider,
+        IDomainEventDispatcher domainEventDispatcher
+        )
         : base(options)
     {
         _currentUserProvider = currentUserProvider;
         _logger = logger;
         _dateTimeProvider = dateTimeProvider;
+        _domainEventDispatcher = domainEventDispatcher;
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -103,11 +110,41 @@ public abstract class AppDbContextBase<TContext>
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         OnBeforeSaving();
+
         try
         {
-            return await base.SaveChangesAsync(cancellationToken);
+            if (_domainEventDispatcher != null)
+            {
+                var domainEntities = ChangeTracker
+                    .Entries<IHasDomainEvents>()
+                    .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any())
+                    .ToList();
+
+
+                var domainEvents = domainEntities
+                    .SelectMany(x => x.Entity.DomainEvents)
+                    .ToList();
+
+
+                foreach (var entity in domainEntities)
+                {
+                    entity.Entity.ClearDomainEvents();
+                }
+
+                var result = await base.SaveChangesAsync(cancellationToken);
+
+
+                await _domainEventDispatcher.DispatchAsync(domainEvents);
+
+                return result;
+
+            }
+            else
+            {
+                return await base.SaveChangesAsync(cancellationToken);
+            }
+  
         }
-        //ref: https://learn.microsoft.com/en-us/ef/core/saving/concurrency?tabs=data-annotations#resolving-concurrency-conflicts
         catch (DbUpdateConcurrencyException ex)
         {
             foreach (var entry in ex.Entries)
@@ -116,16 +153,55 @@ public abstract class AppDbContextBase<TContext>
 
                 if (databaseValues == null)
                 {
-                    _logger.LogError("The record no longer exists in the database, The record has been deleted by another user.");
+                    _logger?.LogError("The record no longer exists in the database.");
                     throw;
                 }
 
-                // Refresh the original values to bypass next concurrency check
                 entry.OriginalValues.SetValues(databaseValues);
             }
 
-            return await base.SaveChangesAsync(cancellationToken);
+
+
+            if (_domainEventDispatcher != null)
+            {
+                var domainEntities = ChangeTracker
+                    .Entries<IHasDomainEvents>()
+                    .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any())
+                    .ToList();
+
+
+                var domainEvents = domainEntities
+                    .SelectMany(x => x.Entity.DomainEvents)
+                    .ToList();
+
+                await _domainEventDispatcher.DispatchAsync(domainEvents);
+
+                foreach (var entity in domainEntities)
+                {
+                    entity.Entity.ClearDomainEvents();
+                }
+
+                var result = await base.SaveChangesAsync(cancellationToken);
+                // Clear sau khi dispatch
+
+                return result;
+
+            }
+            else
+            {
+                return await base.SaveChangesAsync(cancellationToken);
+            }
         }
+    }
+
+    private async Task DispatchDomainEventsAsync(CancellationToken cancellationToken)
+    {
+        if (_domainEventDispatcher == null)
+            return;
+
+        var domainEvents = GetDomainEvents();
+
+        await _domainEventDispatcher.DispatchAsync(domainEvents);
     }
 
     public IReadOnlyList<IDomainEvent> GetDomainEvents()
