@@ -1,3 +1,4 @@
+using Microsoft.OpenApi;
 using order_system_modular_monolith.Api.Extension;
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.Identity.Extensions.Infrastructure;
@@ -13,13 +14,30 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddBuildingBlocksInfrastructure();
 builder.Services.AddEndpointsApiExplorer();
+var authority = builder.Configuration["Jwt:Authority"] ?? "https://localhost:5001";
+var audience = builder.Configuration["Jwt:Audience"] ?? "order-system-modular-monolith";
+var authorityUri = new Uri(authority.TrimEnd('/'));
+
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new()
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Order System API", Version = "v1" });
+
+    // Định nghĩa OAuth2 scheme
+    options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
     {
-        Title = "Order System API",
-        Version = "v1"
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Description = "Paste JWT Bearer token (từ login riêng)"
     });
+
+    options.AddSecurityRequirement((document) => new OpenApiSecurityRequirement
+{
+    {
+        new OpenApiSecuritySchemeReference("bearer", document!),
+        new List<string>(){} 
+    }
+});
 });
 builder.AddProductModules(builder.Configuration);
 builder.AddIdentityModules(builder.Configuration);
@@ -34,6 +52,8 @@ app.UseIdentityModules();
 
 app.UseHttpsRedirection();
 
+// Enable authentication before authorization so JWT tokens / IdentityServer are validated
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -46,13 +66,23 @@ if (app.Environment.IsDevelopment())
 {
     app.MapScalarApiReference(options =>
     {
-        options.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json";
-        options.Title = "Order System API";
-        options.Theme = ScalarTheme.DeepSpace;
+        options
+            .WithTitle("Order System API - Scalar UI")
+            .WithTheme(ScalarTheme.DeepSpace)  // hoặc Moon, Purple, ...
+            .WithOpenApiRoutePattern("/swagger/v1/swagger.json")
+            .WithHttpBearerAuthentication(bearer => { bearer.Token = "paste-jwt-here-if-needed"; });
     });
-    app.UseSwagger();
-    app.UseSwaggerUI();
 
+    // Optional: Giữ Swagger UI cũ nếu muốn so sánh
+    app.UseSwagger();
+    app.UseSwaggerUI(opt =>
+    {
+        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Order System API v1");
+        //opt.OAuthClientId("swagger-ui");
+        //opt.OAuthAppName("Swagger UI");
+        //opt.OAuthUsePkce();
+        //opt.OAuthScopes("openid", "profile", audience);
+    });
 }
 
 app.Run();

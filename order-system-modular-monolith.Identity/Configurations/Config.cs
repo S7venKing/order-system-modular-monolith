@@ -19,7 +19,8 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            new(JwtClaimTypes.Role, new List<string> {"role"})
+            // Define API scope for the Order System and request role claims in access token
+            new ApiScope(Constants.StandardScopes.OrderSystem, new List<string> { JwtClaimTypes.Role })
         };
 
 
@@ -54,5 +55,24 @@ public static class Config
                 IdentityTokenLifetime = 3600, // authenticate the user,
                 AlwaysIncludeUserClaimsInIdToken = true // Include claims in ID token
             }
+        ,
+        // Swagger UI / Scalar interactive client
+        new Client
+        {
+            ClientId = "swagger-ui",
+            ClientName = "Swagger UI",
+            AllowedGrantTypes = GrantTypes.Code,
+            RequirePkce = true,
+            RequireClientSecret = false,
+            RedirectUris = { "https://localhost:5003/oauth2-redirect.html" }, // Swagger UI redirect
+            PostLogoutRedirectUris = { "https://localhost:5003/swagger" },
+            AllowedCorsOrigins = { "https://localhost:5003" },
+            AllowedScopes =
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Profile,
+                Constants.StandardScopes.OrderSystem,
+            }
+        }
         };
 }

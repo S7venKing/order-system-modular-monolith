@@ -9,11 +9,11 @@ using order_system_modular_monolith.BuildingBlocks.Exceptions;
 
 namespace order_system_modular_monolith.Stock.Service
 {
-    public class UpdateStockHandler : IRequestHandler<UpdateStockRequestDto, UpdateStockResponseDto>
+    public class IncreaseProductQuantityHandler : IRequestHandler<UpdateStockRequestDto, UpdateStockResponseDto>
     {
         private readonly IStockRepository _stockRepository;
 
-        public UpdateStockHandler(IStockRepository stockRepository)
+        public IncreaseProductQuantityHandler(IStockRepository stockRepository)
         {
             _stockRepository = stockRepository;
         }
@@ -22,7 +22,7 @@ namespace order_system_modular_monolith.Stock.Service
         {
             try
             {
-                var code = await _stockRepository.UpdateByProductCode(request);
+                var code = await _stockRepository.AddProductQuantity(request);
 
                 return (UpdateStockResponseDto)UpdateStockResponseDto.Success();
             }

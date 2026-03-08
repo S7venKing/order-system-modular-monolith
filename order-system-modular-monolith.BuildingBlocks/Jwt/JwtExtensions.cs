@@ -25,9 +25,9 @@ namespace order_system_modular_monolith.BuildingBlocks.Jwt
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuers = [jwtOptions.Authority],
+                    ValidIssuers = new[] { jwtOptions.Authority },
                     ValidateAudience = true,
-                    ValidAudiences = [jwtOptions.Audience],
+                    ValidAudiences = new[] { jwtOptions.Audience },
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromSeconds(2), // Reduce default clock skew
                     // For IdentityServer4/Duende, we should also validate the signing key

@@ -26,4 +26,8 @@
 		<ProjectReference Include="..\order-system-modular-monolith.BuildingBlocks\order-system-modular-monolith.BuildingBlocks.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Identity\Controller\" />
+	</ItemGroup>
+
 </Project>

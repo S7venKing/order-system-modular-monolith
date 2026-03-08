@@ -17,7 +17,6 @@ public static class InfrastructureExtensions
         builder.Services.AddScoped<IDataSeeder, IdentityDataSeeder>();
         builder.AddCustomIdentityServer();
 
-
         builder.Services.AddCustomMediatR();
 
         return builder;
