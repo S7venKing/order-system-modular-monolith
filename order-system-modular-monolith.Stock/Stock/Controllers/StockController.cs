@@ -43,9 +43,9 @@ namespace order_system_modular_monolith.Stock.Stock.Controllers
             }
         }
 
-        [HttpPatch("increatequantity")]
+        [HttpPatch("increasequantity")]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> IncreateProductQuantity([FromBody] UpdateStockRequestDto input, CancellationToken cancellationToken)
+        public async Task<IActionResult> IncreaseProductQuantity([FromBody] UpdateStockRequestDto input, CancellationToken cancellationToken)
         {
             try
             {
