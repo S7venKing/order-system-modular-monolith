@@ -14,5 +14,9 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="order-system-modular-monolith.Order\Data\OrderDbContext.cs" />
+    <None Include="order-system-modular-monolith.Order\Extensions\Infrastructure\InfrastructureExtension.cs" />
+    <None Include="order-system-modular-monolith.Order\order-system-modular-monolith.Order.csproj" />
+    <None Include="order-system-modular-monolith.Order\OrderRoot.cs" />
   </ItemGroup>
 </Project>
