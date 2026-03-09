@@ -27,34 +27,37 @@ public static class Config
     public static IList<ApiResource> ApiResources =>
         new List<ApiResource>
         {
-            new(Constants.StandardScopes.OrderSystem)
-            {
-                Scopes = { Constants.StandardScopes.OrderSystem }
-            },
+new(Constants.StandardScopes.OrderSystem)
+{
+    Scopes = { Constants.StandardScopes.OrderSystem },
+    UserClaims = { JwtClaimTypes.Role }
+}
         };
 
     public static IEnumerable<Client> Clients =>
         new List<Client>
         {
-            new()
-            {
-                ClientId = "client",
-                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-                AllowedScopes =
-                {
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
-                    JwtClaimTypes.Role, // Include roles scope
-                    Constants.StandardScopes.OrderSystem,
-                },
-                AccessTokenLifetime = 3600,  // authorize the client to access protected resources
-                IdentityTokenLifetime = 3600, // authenticate the user,
-                AlwaysIncludeUserClaimsInIdToken = true // Include claims in ID token
-            }
+new Client
+{
+    ClientId = "client",
+
+    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+    ClientSecrets =
+    {
+        new Secret("secret".Sha256())
+    },
+
+    AllowedScopes =
+    {
+        IdentityServerConstants.StandardScopes.OpenId,
+        IdentityServerConstants.StandardScopes.Profile,
+        Constants.StandardScopes.OrderSystem
+    },
+
+    AccessTokenLifetime = 3600,
+    IdentityTokenLifetime = 3600,
+}
         ,
         // Swagger UI / Scalar interactive client
         new Client

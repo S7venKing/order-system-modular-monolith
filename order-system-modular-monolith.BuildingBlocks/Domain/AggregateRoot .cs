@@ -18,7 +18,7 @@ namespace order_system_modular_monolith.BuildingBlocks.Domain
         public IReadOnlyCollection<IDomainEvent> DomainEvents
             => _domainEvents.AsReadOnly();
 
-        protected void Raise(IDomainEvent domainEvent)
+        public void Raise(IDomainEvent domainEvent)
             => _domainEvents.Add(domainEvent);
 
         public void ClearDomainEvents()

@@ -69,7 +69,7 @@ public class IdentityDataSeeder : IDataSeeder
                 }
             }
 
-            if (await _userManager.FindByNameAsync("meysamh2") == null)
+            if (await _userManager.FindByNameAsync("samh2") == null)
             {
                 var result = await _userManager.CreateAsync(InitialData.Users.Last(), "User@123456");
 

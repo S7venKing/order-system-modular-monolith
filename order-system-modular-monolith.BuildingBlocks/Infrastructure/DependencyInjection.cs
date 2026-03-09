@@ -17,6 +17,7 @@ namespace order_system_modular_monolith.BuildingBlocks.Infrastructure
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+            // Redis is optional; modules should call AddRedis when needed via WebApplicationBuilder extensions
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(DomainEventDispatcher).Assembly);

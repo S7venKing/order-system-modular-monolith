@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login (JWT)</title>
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; padding: 24px; }
+      label { display:block; margin-top:8px }
+      input { width: 300px; padding:6px }
+      button { margin-top:12px }
+      pre { background:#f6f6f6; padding:12px }
+    </style>
+  </head>
+  <body>
+    <h2>Login using JWT (Resource Owner Password)</h2>
+    <div>
+      <label>Username<input id="username" value="alice" /></label>
+      <label>Password<input id="password" type="password" value="password"/></label>
+      <label>ClientId<input id="clientId" value="client"/></label>
+      <label>ClientSecret<input id="clientSecret" value="secret"/></label>
+      <button id="btnLogin">Login</button>
+    </div>
+
+    <h3>Token response</h3>
+    <pre id="result">(no token)</pre>
+
+    <h3>Test authenticated /api/auth/me</h3>
+    <button id="btnMe">Call /api/auth/me</button>
+    <pre id="me">(not called)</pre>
+
+    <script>
+      const btn = document.getElementById('btnLogin');
+      const res = document.getElementById('result');
+      btn.addEventListener('click', async () => {
+        const payload = {
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value,
+          clientId: document.getElementById('clientId').value,
+          clientSecret: document.getElementById('clientSecret').value
+        };
+
+        const r = await fetch('/api/auth/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const text = await r.text();
+        try { const obj = JSON.parse(text); localStorage.setItem('access_token', obj.access_token); res.textContent = JSON.stringify(obj, null, 2);} catch { res.textContent = text; }
+      });
+
+      document.getElementById('btnMe').addEventListener('click', async () => {
+        const token = localStorage.getItem('access_token');
+        const r = await fetch('/api/auth/me', { headers: { Authorization: token ? 'Bearer '+token : '' }});
+        const t = await r.text();
+        try { document.getElementById('me').textContent = JSON.stringify(JSON.parse(t), null, 2); } catch { document.getElementById('me').textContent = t; }
+      });
+    </script>
+  </body>
+</html>

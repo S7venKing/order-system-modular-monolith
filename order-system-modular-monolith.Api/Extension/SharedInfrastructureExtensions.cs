@@ -15,6 +15,16 @@ namespace order_system_modular_monolith.Api.Extension
             builder.Services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
             builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddJwt();
+            // register redis via building blocks extension if configured
+            try
+            {
+                builder.Services.AddRedis(builder.Configuration);
+            }
+            catch
+            {
+                // ignore if redis not available or configuration missing
+            }
+
             return builder;
         }
     }
