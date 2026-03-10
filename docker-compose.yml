@@ -62,10 +62,60 @@ services:
     networks:
       - orders-network
 
+  # --- Monitoring ---
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - orders-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+      - loki
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - orders-network
+
+  # --- Tracing ---
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    ports:
+      - "16686:16686"   # Jaeger UI
+      - "6831:6831/udp" # UDP agent
+      - "4317:4317"     # OTLP gRPC
+    networks:
+      - orders-network
+
+  # --- Logging ---
+  loki:
+    image: grafana/loki
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./monitoring/loki-config.yml:/etc/loki/local-config.yaml
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - orders-network
+
 volumes:
   redis-data:
   postgres-data:
   mongo-data:
+  grafana-data:
+  loki-data: 
 
 networks:
   orders-network:
