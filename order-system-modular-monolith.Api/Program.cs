@@ -4,10 +4,17 @@ using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.Identity.Extensions.Infrastructure;
 using order_system_modular_monolith.Product.Extensions.Infrastructure;
 using order_system_modular_monolith.Stock.Extensions.Infrastructure;
+using Prometheus;
 using Scalar.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
@@ -105,7 +112,7 @@ if (app.Environment.IsDevelopment())
         opt.OAuthUsePkce();
         opt.OAuthScopes("openid", "profile", audience);
     });
-
+    app.MapPrometheusScrapingEndpoint();
     app.UseCors("AllowSwagger");
 }
 

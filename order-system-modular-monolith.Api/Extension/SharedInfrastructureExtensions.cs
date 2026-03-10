@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using order_system_modular_monolith.BuildingBlocks.Application.Abstractions;
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.BuildingBlocks.Jwt;
 using order_system_modular_monolith.BuildingBlocks.Web;
+using Prometheus;
 
 namespace order_system_modular_monolith.Api.Extension
 {
@@ -14,6 +18,20 @@ namespace order_system_modular_monolith.Api.Extension
             builder.AddServiceDefaults();
             builder.Services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
             builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+
+            builder.Services.AddOpenTelemetry()
+                .ConfigureResource(resource => resource
+                    .AddService("order-system-api"))
+                .WithTracing(tracing => tracing
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation()
+                    .AddJaegerExporter())
+                .WithMetrics(metrics => metrics
+                    .AddAspNetCoreInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddPrometheusExporter());
             builder.Services.AddJwt();
             // register redis via building blocks extension if configured
             try

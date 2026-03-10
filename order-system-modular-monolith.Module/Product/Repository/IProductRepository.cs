@@ -7,6 +7,5 @@ namespace order_system_modular_monolith.Product.Repository
     public interface IProductRepository : IRepository<Products, Guid>
     {
         Task<string> UpdateByCode(UpdateProductRequestDto req);
-        Task<Products?> GetByCodeAsync(string code);
     }
 }
