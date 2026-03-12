@@ -8,7 +8,6 @@ using order_system_modular_monolith.BuildingBlocks.EFCore;
 using order_system_modular_monolith.BuildingBlocks.Web;
 using order_system_modular_monolith.Stock.Data;
 using order_system_modular_monolith.Stock.Repository;
-using order_system_modular_monolith.Stock.Stock.Service;
 using order_system_modular_monolith.Stock.Service;
 
 namespace order_system_modular_monolith.Stock.Extensions.Infrastructure

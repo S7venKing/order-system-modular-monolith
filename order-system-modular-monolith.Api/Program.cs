@@ -2,6 +2,7 @@ using Microsoft.OpenApi;
 using order_system_modular_monolith.Api.Extension;
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
 using order_system_modular_monolith.Identity.Extensions.Infrastructure;
+using order_system_modular_monolith.Order.Order.Infrastructure;
 using order_system_modular_monolith.Product.Extensions.Infrastructure;
 using order_system_modular_monolith.Stock.Extensions.Infrastructure;
 using Prometheus;
@@ -67,6 +68,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.AddProductModules(builder.Configuration);
 builder.AddIdentityModules(builder.Configuration);
 builder.AddStockModules(builder.Configuration);
+builder.AddOrderModule(builder.Configuration);
+
 builder.AddSharedInfrastructure();
 
 var app = builder.Build();
