@@ -25,6 +25,9 @@ namespace order_system_modular_monolith.Product.Extensions.Infrastructure
             builder.Services.AddTransient<IProductRepository, ProductRepository>();
             builder.Services.AddTransient<CreateProductHandler>();
             builder.Services.AddTransient<UpdateProductHandler>();
+            // register gRPC service implementation
+            builder.Services.AddGrpc();
+            builder.Services.AddTransient<order_system_modular_monolith.Product.Grpc.ProductServiceImpl>();
             //builder.Services.AddTransient<ProductCreatedDomainEvent>();
 
             return builder;
@@ -33,6 +36,9 @@ namespace order_system_modular_monolith.Product.Extensions.Infrastructure
         public static WebApplication UseProductModules(this WebApplication app)
         {
             app.UseMigration<ProductDbContext>();
+
+            // map gRPC service
+            app.MapGrpcService<order_system_modular_monolith.Product.Grpc.ProductServiceImpl>();
 
             return app;
         }

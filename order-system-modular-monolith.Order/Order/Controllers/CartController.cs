@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
 using order_system_modular_monolith.Order.Order.Domain;
-using order_system_modular_monolith.Order.Order.Infrastructure.Redis;
 using order_system_modular_monolith.BuildingBlocks.Web;
+using order_system_modular_monolith.Order.Order.Handlers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
@@ -12,35 +13,61 @@ namespace order_system_modular_monolith.Order.Order.Controllers
     //[Authorize]
     public class CartController : ControllerBase
     {
-        private readonly CartRedisRepository _repo;
-        private readonly ICurrentUserProvider _currentUserProvider;
+        private readonly IMediator _mediator;
 
-        public CartController(CartRedisRepository repo, ICurrentUserProvider currentUserProvider)
+        public CartController(IMediator mediator)
         {
-            _repo = repo;
-            _currentUserProvider = currentUserProvider;
+            _mediator = mediator;
         }
 
         [HttpPost("add")]
         public async Task<IActionResult> AddToCart([FromBody] CartItem item)
         {
-            var userId = _currentUserProvider.GetCurrentUserId();
-            if (userId == null)
+            try
+            {
+                await _mediator.Send(new AddToCartCommand(item));
+                return Ok();
+            }
+            catch (UnauthorizedAccessException)
+            {
                 return Unauthorized();
-
-            await _repo.AddToCartAsync(userId.Value.ToString(), item);
-            return Ok();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("getcart")]
         public async Task<IActionResult> GetCart()
         {
-            var userId = _currentUserProvider.GetCurrentUserId();
-            if (userId == null)
+            try
+            {
+                var items = await _mediator.Send(new GetCartQuery());
+                return Ok(items);
+            }
+            catch (UnauthorizedAccessException)
+            {
                 return Unauthorized();
+            }
+        }
 
-            var cart = await _repo.GetCartAsync(userId.Value.ToString());
-            return Ok(cart);
+        [HttpDelete("remove/{productCode}")]
+        public async Task<IActionResult> RemoveFromCart(string productCode)
+        {
+            try
+            {
+                await _mediator.Send(new RemoveFromCartCommand(productCode));
+                return Ok();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
         }
     }
 }

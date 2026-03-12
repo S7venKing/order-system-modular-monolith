@@ -1,0 +1,16 @@
+syntax = "proto3";
+option csharp_namespace = "order_system_modular_monolith.Stock.Protos";
+
+service StockService {
+  rpc GetStock (GetStockRequest) returns (GetStockResponse);
+}
+
+message GetStockRequest {
+  string code = 1;
+}
+
+message GetStockResponse {
+  string code = 1;
+  double quantity = 2;
+  bool found = 3;
+}

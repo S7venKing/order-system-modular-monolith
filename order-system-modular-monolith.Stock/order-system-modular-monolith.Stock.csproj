@@ -31,5 +31,10 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.54.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="Protos\stock.proto" GrpcServices="Both" />
 	</ItemGroup>
 </Project>

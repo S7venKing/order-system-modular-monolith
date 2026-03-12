@@ -23,6 +23,8 @@ namespace order_system_modular_monolith.Stock.Extensions.Infrastructure
             builder.Services.AddTransient<IStockRepository, StockRepository>();
             builder.Services.AddTransient<UpdateStockHandler>();
             builder.Services.AddTransient<ProductCreatedHandler>();
+            builder.Services.AddGrpc();
+            builder.Services.AddTransient<order_system_modular_monolith.Stock.Stock.Grpc.StockServiceImpl>();
 
             return builder;
         }
@@ -30,6 +32,7 @@ namespace order_system_modular_monolith.Stock.Extensions.Infrastructure
         public static WebApplication UseStockModules(this WebApplication app)
         {
             app.UseMigration<StockDbContext>();
+            app.MapGrpcService<order_system_modular_monolith.Stock.Stock.Grpc.StockServiceImpl>();
 
             return app;
         }

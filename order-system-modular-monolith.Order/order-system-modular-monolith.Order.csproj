@@ -9,14 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.54.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\order-system-modular-monolith.BuildingBlocks\order-system-modular-monolith.BuildingBlocks.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Order\" />
+    <ProjectReference Include="..\order-system-modular-monolith.Product\order-system-modular-monolith.Product.csproj" />
+    <ProjectReference Include="..\order-system-modular-monolith.Stock\order-system-modular-monolith.Stock.csproj" />
   </ItemGroup>
 
 </Project>
