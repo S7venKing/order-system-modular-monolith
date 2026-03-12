@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Seed\**" />
+    <Compile Remove="Product\Product\**" />
+    <EmbeddedResource Remove="Data\Seed\**" />
+    <EmbeddedResource Remove="Product\Product\**" />
+    <None Remove="Data\Seed\**" />
+    <None Remove="Product\Product\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\order-system-modular-monolith.BuildingBlocks\order-system-modular-monolith.BuildingBlocks.csproj" />
     <ProjectReference Include="..\order-system-modular-monolith.ServiceDefaults\order-system-modular-monolith.ServiceDefaults.csproj" />
   </ItemGroup>
@@ -18,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\Seed\" />
   </ItemGroup>
 	
 	<ItemGroup>

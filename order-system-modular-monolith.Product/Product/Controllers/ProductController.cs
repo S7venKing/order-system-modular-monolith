@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using order_system_modular_monolith.Product.Dtos.UpdateProductDto;
-using order_system_modular_monolith.Product.Product.Dtos.CreateProductDto;
+using order_system_modular_monolith.Product.Dtos.CreateProductDto;
+using order_system_modular_monolith.Product.Exceptions;
 using order_system_modular_monolith.Product.Product.Service;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using order_system_modular_monolith.Product.Service;
 
 namespace order_system_modular_monolith.Product.Product.Controllers
 {
@@ -25,31 +27,39 @@ namespace order_system_modular_monolith.Product.Product.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestDto input, CancellationToken cancellationToken)
         {
-            var response = await _createProductHandler.Handle(input, cancellationToken);
-            if (response == null || response.Id == null)
-            {
-                return BadRequest("Create Product failed!");
-            }
-            return Ok("Create Product successfully");
-        }
-
-        [HttpPatch("update")]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequestDto input, CancellationToken cancellationToken)
-        {
             try
             {
-                var response = await _updateProductHandler.Handle(input, cancellationToken);
-                if (response == null || !response.IsSuccess)
+                var response = await _createProductHandler.Handle(input, cancellationToken);
+                if (response == null || response.Id == null)
                 {
-                    return BadRequest("Create Product failed! " + response?.Error?.Message);
+                    return BadRequest("Create Product failed!");
                 }
                 return Ok("Create Product successfully");
             }
-            catch (Exception)
+            catch (ExistingException)
             {
-                return BadRequest("Error");
-            }
+                return BadRequest("Product code already exists!");
 
+            }
+        }
+
+            [HttpPatch("update")]
+            public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequestDto input, CancellationToken cancellationToken)
+            {
+                try
+                {
+                    var response = await _updateProductHandler.Handle(input, cancellationToken);
+                    if (response == null || !response.IsSuccess)
+                    {
+                        return BadRequest("Create Product failed! " + response?.Error?.Message);
+                    }
+                    return Ok("Create Product successfully");
+                }
+                catch (Exception)
+                {
+                    return BadRequest("Error");
+                }
+
+            }
         }
     }
-}

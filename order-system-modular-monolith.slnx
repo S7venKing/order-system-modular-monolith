@@ -10,8 +10,8 @@
   <Project Path="order-system-modular-monolith.AppHost/order-system-modular-monolith.AppHost.csproj" />
   <Project Path="order-system-modular-monolith.BuildingBlocks/order-system-modular-monolith.BuildingBlocks.csproj" />
   <Project Path="order-system-modular-monolith.Identity/order-system-modular-monolith.Identity.csproj" Id="4aaa2e13-6099-4b20-a3d3-7f70b793af8c" />
-  <Project Path="order-system-modular-monolith.Module/order-system-modular-monolith.Product.csproj" />
-  <Project Path="order-system-modular-monolith.Order/order-system-modular-monolith.Order.csproj" />
+  <Project Path="order-system-modular-monolith.Order/order-system-modular-monolith.Order.csproj" Id="cda8247e-0a4f-4ded-a923-d0a73e6b10ec" />
+  <Project Path="order-system-modular-monolith.Product/order-system-modular-monolith.Product.csproj" />
   <Project Path="order-system-modular-monolith.ServiceDefaults/order-system-modular-monolith.ServiceDefaults.csproj" Id="1c8df278-b3c0-42db-a885-ee065ea7df26" />
   <Project Path="order-system-modular-monolith.Stock/order-system-modular-monolith.Stock.csproj" />
 </Solution>

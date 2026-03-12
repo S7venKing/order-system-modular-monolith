@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\order-system-modular-monolith.Api\order-system-modular-monolith.Api.csproj" />
-    <ProjectReference Include="..\order-system-modular-monolith.Module\order-system-modular-monolith.Product.csproj" />
   </ItemGroup>
 
   <ItemGroup>

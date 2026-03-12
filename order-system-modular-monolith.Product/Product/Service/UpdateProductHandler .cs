@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using order_system_modular_monolith.BuildingBlocks.Application;
-using order_system_modular_monolith.Product.Product.Exceptions;
+using order_system_modular_monolith.Product.Exceptions;
 
 namespace order_system_modular_monolith.Product.Product.Service
 {

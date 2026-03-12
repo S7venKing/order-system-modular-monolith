@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace order_system_modular_monolith.Product.Product.Exceptions
+namespace order_system_modular_monolith.Product.Exceptions
 {
     public class NotFoundProductException : NotFoundException
     {

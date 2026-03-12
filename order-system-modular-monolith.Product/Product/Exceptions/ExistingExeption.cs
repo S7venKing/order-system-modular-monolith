@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace order_system_modular_monolith.Product.Product.Exceptions
+namespace order_system_modular_monolith.Product.Exceptions
 {
     public class ExistingException : Exception
     {

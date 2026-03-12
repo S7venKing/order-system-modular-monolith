@@ -2,13 +2,13 @@
 using order_system_modular_monolith.Product.Data;
 using order_system_modular_monolith.Product.Dtos.UpdateProductDto;
 using order_system_modular_monolith.Product.Models;
-using order_system_modular_monolith.Product.Product.Exceptions;
+using order_system_modular_monolith.Product.Exceptions;
 using order_system_modular_monolith.Product.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace order_system_modular_monolith.Product.Product.Repository
+namespace order_system_modular_monolith.Product.Repository
 {
     public class ProductRepository : IProductRepository
     {
