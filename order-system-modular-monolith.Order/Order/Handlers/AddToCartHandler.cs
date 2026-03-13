@@ -37,13 +37,13 @@ namespace order_system_modular_monolith.Order.Order.Handlers
             if (!prod.Found) throw new KeyNotFoundException("Product not found");
 
             // fetch stock
-            var stock = await _stockClient.GetStockAsync(new GetStockRequest { Code = request.Item.ProductCode });
-            if (!stock.Found || stock.Quantity <= 0)
-            {
-                // ensure remove from cart if exists
-                await _repo.RemoveProductFromCartAsync(_userId, request.Item.ProductCode);
-                throw new InvalidOperationException("Out of stock");
-            }
+            //var stock = await _stockClient.GetStockAsync(new GetStockRequest { Code = request.Item.ProductCode });
+            //if (!stock.Found || stock.Quantity <= 0)
+            //{
+            //    // ensure remove from cart if exists
+            //    await _repo.RemoveProductFromCartAsync(_userId, request.Item.ProductCode);
+            //    throw new InvalidOperationException("Out of stock");
+            //}
 
             // set product price and name
             request.Item.Price = (decimal)prod.Price;
