@@ -31,6 +31,12 @@ namespace order_system_modular_monolith.Order.Order.Infrastructure.Redis
             return items;
         }
 
+        public async Task ClearCartAsync(string userId)
+        {
+            await _redis.RemoveAsync(Key(userId));
+        }
+
+
         public async Task RemoveProductFromCartAsync(string userId, string productCode)
         {
             var items = await GetCartAsync(userId);
