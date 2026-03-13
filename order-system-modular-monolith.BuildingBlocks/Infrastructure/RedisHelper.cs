@@ -117,5 +117,31 @@ namespace order_system_modular_monolith.BuildingBlocks.Infrastructure
                 }
             }
         }
+
+        public async Task<bool> LockTakeAsync(string lockKey, string lockValue, TimeSpan timeSpan)
+        {
+            return await Db.LockTakeAsync(lockKey, lockValue, timeSpan);
+        }
+
+        public async Task<bool> LockReleaseAsync(string lockKey, string lockValue)
+        {
+            return await Db.LockReleaseAsync(lockKey, lockValue);
+        }
+
+        public async Task<T?> HashGetAsync<T>(string key, string field)
+        {
+            var value = await Db.HashGetAsync(key, field);
+
+            if (value.IsNull) return default;
+
+            return JsonSerializer.Deserialize<T>(value.ToString());
+        }
+
+        public async Task HashSetAsync<T>(string key, string field, T value)
+        {
+            var json = JsonSerializer.Serialize(value);
+
+            await Db.HashSetAsync(key, field, json);
+        }
     }
 }

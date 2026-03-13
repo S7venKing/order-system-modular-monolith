@@ -21,8 +21,20 @@ namespace order_system_modular_monolith.Order.Order.Infrastructure.Redis
 
         public async Task AddToCartAsync(string userId, CartItem item)
         {
-            // We store list of items; push on left for simplicity
-            await _redis.ListLeftPushAsync(Key(userId), item);
+            var key = Key(userId);
+
+            var existing = await _redis.HashGetAsync<CartItem>(key, item.ProductCode);
+
+            if (existing != null)
+            {
+                existing.Quantity += item.Quantity;
+
+                await _redis.HashSetAsync(key, item.ProductCode, existing);
+            }
+            else
+            {
+                await _redis.HashSetAsync(key, item.ProductCode, item);
+            }
         }
 
         public async Task<IEnumerable<CartItem>> GetCartAsync(string userId)
