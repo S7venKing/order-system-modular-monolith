@@ -12,6 +12,7 @@ services:
       - postgres
       - mongo
     environment:
+      ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__Redis: redis:6379
       ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=ordersdb;Username=postgres;Password=postgres
       ConnectionStrings__Mongo: mongodb://mongo:27017/orders-mongo
