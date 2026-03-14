@@ -15,7 +15,7 @@ WORKDIR /src
 COPY ["order-system-modular-monolith.Api/order-system-modular-monolith.Api.csproj", "order-system-modular-monolith.Api/"]
 COPY ["order-system-modular-monolith.BuildingBlocks/order-system-modular-monolith.BuildingBlocks.csproj", "order-system-modular-monolith.BuildingBlocks/"]
 COPY ["order-system-modular-monolith.Identity/order-system-modular-monolith.Identity.csproj", "order-system-modular-monolith.Identity/"]
-COPY ["order-system-modular-monolith.Module/order-system-modular-monolith.Product.csproj", "order-system-modular-monolith.Module/"]
+COPY ["order-system-modular-monolith.Product/order-system-modular-monolith.Product.csproj", "order-system-modular-monolith.Product/"]
 COPY ["order-system-modular-monolith.ServiceDefaults/order-system-modular-monolith.ServiceDefaults.csproj", "order-system-modular-monolith.ServiceDefaults/"]
 RUN dotnet restore "./order-system-modular-monolith.Api/order-system-modular-monolith.Api.csproj"
 COPY . .

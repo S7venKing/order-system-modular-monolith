@@ -17,6 +17,8 @@ services:
       ConnectionStrings__Mongo: mongodb://mongo:27017/orders-mongo
       Services__Product: http://orders-api:8080
       Services__Stock: http://orders-api:8080
+      Jwt__Authority: "http://orders-api:8080"
+      Jwt__Audience: "order-system-modular-monolith"
     ports:
       - "5000:8080"
     networks:

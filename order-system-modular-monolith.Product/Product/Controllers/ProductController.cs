@@ -7,10 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using order_system_modular_monolith.Product.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace order_system_modular_monolith.Product.Product.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
