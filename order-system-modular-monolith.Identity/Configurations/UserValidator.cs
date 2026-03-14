@@ -19,36 +19,42 @@ public class UserValidator : IResourceOwnerPasswordValidator
         _userManager = userManager;
     }
 
-    public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+{
+    var user = await _userManager.FindByNameAsync(context.UserName);
+
+    if (user == null)
     {
-        var user = await _userManager.FindByNameAsync(context.UserName);
-
-        var signIn = await _signInManager.PasswordSignInAsync(
-            user,
-            context.Password,
-            isPersistent: true,
-            lockoutOnFailure: true);
-
-        if (signIn.Succeeded)
-        {
-            var userId = user!.Id.ToString();
-
-            // context set to success
-            context.Result = new GrantValidationResult(
-                subject: userId,
-                authenticationMethod: "custom",
-                claims: new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userId),
-                    new Claim(ClaimTypes.Name, user.UserName)
-                }
-            );
-
-            return;
-        }
-
-        // context set to Failure
         context.Result = new GrantValidationResult(
-            TokenRequestErrors.UnauthorizedClient, "Invalid Credentials");
+            TokenRequestErrors.InvalidGrant,
+            "Invalid username or password");
+
+        return;
     }
+
+    var signIn = await _signInManager.CheckPasswordSignInAsync(
+        user,
+        context.Password,
+        lockoutOnFailure: true);
+
+    if (!signIn.Succeeded)
+    {
+        context.Result = new GrantValidationResult(
+            TokenRequestErrors.InvalidGrant,
+            "Invalid username or password");
+
+        return;
+    }
+
+    var userId = user.Id.ToString();
+
+    context.Result = new GrantValidationResult(
+        subject: userId,
+        authenticationMethod: "password",
+        claims: new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(ClaimTypes.Name, user.UserName!)
+        });
+}
 }
