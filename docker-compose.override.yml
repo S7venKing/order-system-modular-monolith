@@ -2,10 +2,9 @@ services:
   order-system-modular-monolith.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS: "http://0.0.0.0:8080"
+      - ASPNETCORE_HTTP_PORTS=8080
     ports:
       - "5000:8080"
-      - "5001:8081"
     # volumes:
     #   - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
     #   - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
