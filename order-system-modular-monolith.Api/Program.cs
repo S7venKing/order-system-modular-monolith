@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.OpenApi;
 using order_system_modular_monolith.Api.Extension;
 using order_system_modular_monolith.BuildingBlocks.Infrastructure;
@@ -76,6 +77,8 @@ var app = builder.Build();
 
 app.UseProductModules();
 app.UseIdentityModules();
+app.UseStockModules();
+app.UseOrderModule();
 
 app.UseHttpsRedirection();
 

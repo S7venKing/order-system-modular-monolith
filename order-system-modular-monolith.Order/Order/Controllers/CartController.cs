@@ -10,7 +10,7 @@ namespace order_system_modular_monolith.Order.Order.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly IMediator _mediator;

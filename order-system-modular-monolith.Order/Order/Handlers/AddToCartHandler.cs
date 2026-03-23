@@ -30,10 +30,13 @@ namespace order_system_modular_monolith.Order.Order.Handlers
             _productClient = productClient;
             _stockClient = stockClient;
 
-            var nameId = httpContextAccessor?.HttpContext?.User?
-                .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            // IdentityServer access token usually contains `sub` as the stable subject id.
+            // Fallback to NameIdentifier for cases where the claim is emitted as-is.
+            var userId =
+                httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? httpContextAccessor?.HttpContext?.User?.FindFirst("sub")?.Value;
 
-            _userId = nameId ?? string.Empty;
+            _userId = userId ?? string.Empty;
         }
 
         public async Task<Unit> Handle(AddToCartCommand request, CancellationToken cancellationToken)

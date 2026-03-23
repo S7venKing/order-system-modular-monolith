@@ -21,10 +21,13 @@ namespace order_system_modular_monolith.Order.Order.Handlers
 
         public async Task<IEnumerable<CartItem>> Handle(GetCartQuery request, CancellationToken cancellationToken)
         {
-            var nameId = _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrWhiteSpace(nameId)) throw new UnauthorizedAccessException();
+            var userId =
+                _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? _httpContextAccessor?.HttpContext?.User?.FindFirst("sub")?.Value;
 
-            var items = await _repo.GetCartAsync(nameId);
+            if (string.IsNullOrWhiteSpace(userId)) throw new UnauthorizedAccessException();
+
+            var items = await _repo.GetCartAsync(userId);
             return items;
         }
     }
